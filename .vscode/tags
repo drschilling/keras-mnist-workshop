@@ -1,0 +1,73 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+HISTOGRAM_BUCKETS	../kerasviz.py	/^HISTOGRAM_BUCKETS = 7$/;"	kind:variable	line:30
+I	../mnist_1.0_softmax.py	/^I = kerasviz.kr_format_mnist_images(X, Y, Y_)  # assembles 10x10 images by default$/;"	kind:variable	line:90
+It	../mnist_1.0_softmax.py	/^It = kerasviz.kr_format_mnist_images(X, Y, Y_, 1000, lines=25)  # 1000 images on 25 lines$/;"	kind:variable	line:91
+MnistDataVis	../kerasviz.py	/^class MnistDataVis:$/;"	kind:class	line:129
+W	../mnist_1.0_softmax.py	/^W = K.variable(K.zeros([784, 10]))$/;"	kind:variable	line:58
+X	../mnist_1.0_softmax.py	/^X = K.placeholder('float32', [None, 28, 28, 1])$/;"	kind:variable	line:54
+XX	../mnist_1.0_softmax.py	/^XX = K.reshape(X, [-1, 784])$/;"	kind:variable	line:64
+Y	../mnist_1.0_softmax.py	/^Y = kr.softmax(kr.matmul(XX, W) + b)$/;"	kind:variable	line:67
+Y_	../mnist_1.0_softmax.py	/^Y_ = K.placeholder('float32', [None, 10])$/;"	kind:variable	line:56
+__get_histogram_cyclecolor	../kerasviz.py	/^    def __get_histogram_cyclecolor(self, colornum):$/;"	kind:member	line:158
+__init__	../kerasviz.py	/^    def __init__(self, title1=None, title2=None, title3=None, title4=None, title5=None, title6=None, histogram4colornum=None, histogram5colornum=None, dpi=70):$/;"	kind:member	line:166
+__set_title	../kerasviz.py	/^    def __set_title(self, ax, title, default=""):$/;"	kind:member	line:151
+_animation	../kerasviz.py	/^    _animation = None$/;"	kind:variable	line:144
+_animpause	../kerasviz.py	/^    _animpause = False$/;"	kind:variable	line:143
+_color4	../kerasviz.py	/^    _color4 = None$/;"	kind:variable	line:148
+_color5	../kerasviz.py	/^    _color5 = None$/;"	kind:variable	line:149
+_display_time_histogram	../kerasviz.py	/^def _display_time_histogram(ax, xdata, ydata, color):$/;"	kind:function	line:119
+_empty_collection	../kerasviz.py	/^def _empty_collection(collection):$/;"	kind:function	line:112
+_init	../kerasviz.py	/^        def _init():$/;"	kind:function	line:212
+_key_event_handler	../kerasviz.py	/^        def _key_event_handler(event):$/;"	kind:function	line:247
+_mlp_init_func	../kerasviz.py	/^    _mlp_init_func = None$/;"	kind:variable	line:146
+_mpl_figure	../kerasviz.py	/^    _mpl_figure = None$/;"	kind:variable	line:145
+_mpl_update_func	../kerasviz.py	/^    _mpl_update_func = None$/;"	kind:variable	line:147
+_update	../kerasviz.py	/^        def _update():$/;"	kind:function	line:223
+_update_xmax	../kerasviz.py	/^    def _update_xmax(self, x):$/;"	kind:member	line:313
+_update_y2max	../kerasviz.py	/^    def _update_y2max(self, y):$/;"	kind:member	line:317
+accuracy	../mnist_1.0_softmax.py	/^accuracy = K.mean(tf.cast(correct_prediction, np.float32))$/;"	kind:variable	line:82
+allbiases	../mnist_1.0_softmax.py	/^allbiases = tf.reshape(b, [-1])$/;"	kind:variable	line:89
+allweights	../mnist_1.0_softmax.py	/^allweights = tf.reshape(W, [-1])$/;"	kind:variable	line:88
+animate	../kerasviz.py	/^    def animate(self, compute_step, iterations, train_data_update_freq=20, test_data_update_freq=100, one_test_at_start=True, more_tests_at_start=False, save_movie=False):$/;"	kind:member	line:354
+animate_step	../kerasviz.py	/^        def animate_step(i):$/;"	kind:function	line:356
+append_data_histograms	../kerasviz.py	/^    def append_data_histograms(self, x, datavect1, datavect2, title1=None, title2=None):$/;"	kind:member	line:337
+append_test_curves_data	../kerasviz.py	/^    def append_test_curves_data(self, x, accuracy, loss):$/;"	kind:member	line:327
+append_training_curves_data	../kerasviz.py	/^    def append_training_curves_data(self, x, accuracy, loss):$/;"	kind:member	line:321
+b	../mnist_1.0_softmax.py	/^b = K.variable(K.zeros([10]))$/;"	kind:variable	line:60
+b3	../kerasviz.py	/^    b3 = np.zeros([0,HISTOGRAM_BUCKETS+1])$/;"	kind:variable	line:140
+correct_prediction	../mnist_1.0_softmax.py	/^correct_prediction = tf.equal(tf.argmax(Y, 1), tf.argmax(Y_, 1))$/;"	kind:variable	line:81
+cross_entropy	../mnist_1.0_softmax.py	/^cross_entropy = -K.mean(Y_ * tf.log(Y)) * 1000.0  # normalized for batches of 100 images,$/;"	kind:variable	line:77
+datavis	../mnist_1.0_softmax.py	/^datavis = kerasviz.MnistDataVis()$/;"	kind:variable	line:92
+digits_left	../kerasviz_digits.py	/^def digits_left():$/;"	kind:function	line:305
+digits_right	../kerasviz_digits.py	/^def digits_right():$/;"	kind:function	line:20
+get_max_test_accuracy	../kerasviz.py	/^    def get_max_test_accuracy(self):$/;"	kind:member	line:334
+im1	../kerasviz.py	/^    im1 = np.full((28*10,28*10,3),255, dtype='uint8')$/;"	kind:variable	line:141
+im2	../kerasviz.py	/^    im2 = np.full((28*10,28*10,3),255, dtype='uint8')$/;"	kind:variable	line:142
+init	../mnist_1.0_softmax.py	/^init = tf.global_variables_initializer()$/;"	kind:variable	line:95
+is_paused	../kerasviz.py	/^    def is_paused(self):$/;"	kind:member	line:351
+kerasviz.py	../kerasviz.py	1;"	kind:file	line:1
+kerasviz_digits.py	../kerasviz_digits.py	1;"	kind:file	line:1
+kr_format_mnist_images	../kerasviz.py	/^def kr_format_mnist_images(X, Y, Y_, n=100, lines=10):$/;"	kind:function	line:38
+mnist_1.0_softmax.py	../mnist_1.0_softmax.py	1;"	kind:file	line:1
+mnist_set	../mnist_1.0_softmax.py	/^mnist_set = mnist_data.read_data_sets("data", one_hot=True, reshape=False, validation_size=0)$/;"	kind:variable	line:51
+probability_distribution	../kerasviz.py	/^def probability_distribution(data):$/;"	kind:function	line:78
+sess	../mnist_1.0_softmax.py	/^sess = tf.Session()$/;"	kind:variable	line:96
+train_step	../mnist_1.0_softmax.py	/^train_step = tf.train.GradientDescentOptimizer(0.005).minimize(cross_entropy)$/;"	kind:variable	line:85
+training_step	../mnist_1.0_softmax.py	/^def training_step(i, update_test_data, update_train_data):$/;"	kind:function	line:101
+update_image1	../kerasviz.py	/^    def update_image1(self, im):$/;"	kind:member	line:345
+update_image2	../kerasviz.py	/^    def update_image2(self, im):$/;"	kind:member	line:348
+w3	../kerasviz.py	/^    w3 = np.zeros([0,HISTOGRAM_BUCKETS+1])$/;"	kind:variable	line:139
+x1	../kerasviz.py	/^    x1 = []$/;"	kind:variable	line:132
+x2	../kerasviz.py	/^    x2 = []$/;"	kind:variable	line:135
+x3	../kerasviz.py	/^    x3 = []$/;"	kind:variable	line:138
+xmax	../kerasviz.py	/^    xmax = 0$/;"	kind:variable	line:130
+y1	../kerasviz.py	/^    y1 = []$/;"	kind:variable	line:133
+y2	../kerasviz.py	/^    y2 = []$/;"	kind:variable	line:136
+y2max	../kerasviz.py	/^    y2max = 0$/;"	kind:variable	line:131
+z1	../kerasviz.py	/^    z1 = []$/;"	kind:variable	line:134
+z2	../kerasviz.py	/^    z2 = []$/;"	kind:variable	line:137
