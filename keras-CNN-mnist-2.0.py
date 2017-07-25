@@ -96,6 +96,11 @@ return model
 
 model = deeper_cnn_model()
 
+# O metodo summary revela quais sao as camadas
+# que formam o modelo, seus formatos e o numero
+# de parametros envolvidos em cada etapa.
+model.summary()
+
 # Processo de treinamento do modelo. 
 model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10, batch_size=200)
 

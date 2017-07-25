@@ -40,6 +40,7 @@ from keras.layers import Dense
 # (https://keras.io/utils/).
 from keras.utils import np_utils
 
+import keras_vis 
 
 # Assim como vimos anteriormente em nosso exemplo de visualizacao
 # aqui estamos carregando o conjunto de dados em subconjuntos de 
@@ -89,15 +90,21 @@ num_classes = y_test.shape[1]
 # Modelo basico de uma camada onde inicializamos um modelo sequencial
 # com suas funcoes de ativacao, e o compilamos usando um otimizador e
 # acuracia como metrica.
+
 def base_model():
 	model = Sequential()
 	model.add(Dense(num_pixels, input_dim=num_pixels, kernel_initializer='normal', activation='relu'))
-	model.add(Dense(num_classes, kernel_initializer='normal', activation='softmax'))
+	model.add(Dense(num_classes, kernel_initializer='normal', activation='softmax', name='preds'))
 	model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 	return model
 
 
 model = base_model()
+
+# O metodo summary revela quais sao as camadas
+# que formam o modelo, seus formatos e o numero
+# de parametros envolvidos em cada etapa.
+model.summary()
 
 # Processo de treinamento do modelo. 
 model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10, batch_size=200, verbose=2)
