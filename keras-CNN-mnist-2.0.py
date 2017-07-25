@@ -29,11 +29,17 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.layers import Flatten
+from vis.visualization import visualize_saliency
+from vis.utils import utils
+import numpy as np
+from keras import activations
+from matplotlib import pyplot as plt
 from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import MaxPooling2D
 from keras.utils import np_utils
 from keras import backend as K
 K.set_image_dim_ordering('th')
+%matplotlib inline
 
 # Construimos nossos subconjuntos de treinamento e teste.
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
@@ -89,7 +95,7 @@ def deeper_cnn_model():
     # A camada de saida possui o numero de neuronios compativel com o 
 	# numero de classes a serem classificadas, com uma funcao de ativacao
 	# do tipo 'softmax'.
-	model.add(Dense(num_classes, activation='softmax'))
+	model.add(Dense(num_classes, activation='softmax', name='preds'))
 
 	model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 return model
@@ -107,3 +113,29 @@ model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10, batch_s
 # Avaliacao da performance do nosso primeiro modelo.
 scores = model.evaluate(X_test, y_test, verbose=0)
 print("Baseline Error: %.2f%%" % (100-scores[1]*100))
+
+# Metodo de visualizacao que mostra a varaicao da classificacao
+# dos digitos a partir de diferentes modificadores
+def keras_digits_vis(model, X_test, y_test):
+    
+    layer_idx = utils.find_layer_idx(model, 'preds')
+    model.layers[layer_idx].activation = activations.linear
+    model = utils.apply_modifications(model)
+
+    for class_idx in np.arange(10):    
+        indices = np.where(y_test[:, class_idx] == 1.)[0]
+        idx = indices[0]
+
+        f, ax = plt.subplots(1, 4)
+        ax[0].imshow(X_test[idx][..., 0])
+        
+        for i, modifier in enumerate([None, 'guided', 'relu']):
+            heatmap = visualize_saliency(model, layer_idx, filter_indices=class_idx, 
+                                        seed_input=X_test[idx], backprop_modifier=modifier)
+            if modifier is None:
+                modifier = 'vanilla'
+            ax[i+1].set_title(modifier)    
+            ax[i+1].imshow(heatmap)
+    plt.imshow(heatmap)
+
+keras_digits_vis(model, X_test, y_test)	

@@ -23,10 +23,16 @@
 #                                                                          #               
 ############################################################################
 
-#%%
+
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense
+from vis.visualization import visualize_saliency
+from vis.utils import utils
+import numpy as np
+from keras import activations
+from matplotlib import pyplot as plt
+%matplotlib inline
 
 # Usaremos o metodo de Dropout, um metodo 
 # de regularizacao, para diminuir ao maximo 
@@ -98,9 +104,7 @@ y_test = np_utils.to_categorical(y_test)
 
 # Numero de tipos de digitos encontrados no MNIST.
 num_classes = y_test.shape[1]
-#%%
 
-#%%
 def cnn_model():
 	model = Sequential()
 
@@ -126,7 +130,7 @@ def cnn_model():
 	# Nossa camada de saida possui o numero de neuronios compativel com o 
 	# numero de classes a serem classificadas, com uma funcao de ativacao
 	# do tipo 'softmax'.
-	model.add(Dense(num_classes, activation='softmax'))
+	model.add(Dense(num_classes, activation='softmax', name='preds'))
 
 	model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 	return model
@@ -144,26 +148,30 @@ model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10, batch_s
 # Avaliacao da performance do nosso primeiro modelo.
 scores = model.evaluate(X_test, y_test, verbose=0)
 print("Erro de: %.2f%%" % (100-scores[1]*100))
-#%%
 
-#%%
-
-from vis.visualization import visualize_saliency
-from vis.utils import utils
-from keras import activations
-
-for class_idx in np.arange(10):    
-    indices = np.where(y_test[:, class_idx] == 1.)[0]
-    idx = indices[0]
-
-    f, ax = plt.subplots(1, 4)
-    ax[0].imshow(X_test[idx][..., 0])
+# Metodo de visualizacao que mostra a varaicao da classificacao
+# dos digitos a partir de diferentes modificadores
+def keras_digits_vis(model, X_test, y_test):
     
-    for i, modifier in enumerate([None, 'guided', 'relu']):
-        heatmap = visualize_saliency(model, layer_idx, filter_indices=class_idx, 
-                                     seed_input=X_test[idx], backprop_modifier=modifier)
-        if modifier is None:
-            modifier = 'vanilla'
-        ax[i+1].set_title(modifier)    
-        ax[i+1].imshow(heatmap)
-#%%
+    layer_idx = utils.find_layer_idx(model, 'preds')
+    model.layers[layer_idx].activation = activations.linear
+    model = utils.apply_modifications(model)
+
+    for class_idx in np.arange(10):    
+        indices = np.where(y_test[:, class_idx] == 1.)[0]
+        idx = indices[0]
+
+        f, ax = plt.subplots(1, 4)
+        ax[0].imshow(X_test[idx][..., 0])
+        
+        for i, modifier in enumerate([None, 'guided', 'relu']):
+            heatmap = visualize_saliency(model, layer_idx, filter_indices=class_idx, 
+                                        seed_input=X_test[idx], backprop_modifier=modifier)
+            if modifier is None:
+                modifier = 'vanilla'
+            ax[i+1].set_title(modifier)    
+            ax[i+1].imshow(heatmap)
+    plt.imshow(heatmap)
+
+keras_digits_vis(model, X_test, y_test)	
+

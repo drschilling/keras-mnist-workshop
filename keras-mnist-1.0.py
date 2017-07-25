@@ -40,13 +40,10 @@ from keras.layers import Dense
 # (https://keras.io/utils/).
 from keras.utils import np_utils
 
-import keras_vis 
-
 # Assim como vimos anteriormente em nosso exemplo de visualizacao
 # aqui estamos carregando o conjunto de dados em subconjuntos de 
 # treinamento e teste.
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
-
 
 #################################################################################
 #                                                                               # 
@@ -112,3 +109,4 @@ model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10, batch_s
 # Avaliacao da performance do nosso primeiro modelo.
 scores = model.evaluate(X_test, y_test, verbose=0)
 print("Erro de: %.2f%%" % (100-scores[1]*100))
+
