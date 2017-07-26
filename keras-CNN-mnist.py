@@ -1,6 +1,6 @@
 # encoding: UTF-8
 # Copyright 2017 Udacity.com
-#
+# Authored by Daniel Rodrigues Loureiro (drlschilling@gmail.com)
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -23,14 +23,11 @@
 #                                                                          #               
 ############################################################################
 
-
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense
-from vis.visualization import visualize_saliency
 from vis.utils import utils
 import numpy as np
-from keras import activations
 from matplotlib import pyplot as plt
 
 import keras_mnist_vis

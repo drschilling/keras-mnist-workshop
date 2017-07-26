@@ -1,3 +1,5 @@
+# Authored by Raghavendra Kotikalapudi(ragha@outlook.com)
+
 from vis.visualization import visualize_saliency
 from vis.utils import utils
 import numpy as np
