@@ -32,7 +32,8 @@ from vis.utils import utils
 import numpy as np
 from keras import activations
 from matplotlib import pyplot as plt
-%matplotlib inline
+
+import keras_mnist_vis
 
 # Usaremos o metodo de Dropout, um metodo 
 # de regularizacao, para diminuir ao maximo 
@@ -49,29 +50,29 @@ from keras.layers import Flatten
 # camada para produzir um tensor na saida.                               #
 #                                                                        #
 # Uma rede convolucional tem quatro etapas:                              #
-#         																 #
-# 1) Convolucao															 #	
-#																		 #
+#                                                                        #
+# 1) Convolucao                                                          #    
+#                                                                        #
 # A convoluçao funciona como um rotulador do dado de entrada             #
 # sempre se referindo ao que o modelo aprendeu anteriormente.            #
-# 																		 #	
-# 2) Subamostragem														 # 	
-#																		 #
-# Os inputs da camada convolucional podem ter sensibilidade				 # 
-# de seus filtros reduzida frente ao ruido, e esse processo				 #	
-# chamamos de subamostragem.											 #
-# 																		 #
-# 3) Ativacao															 #
-# 																		 #	
-# A camada de ativacao controla como o sinal flui de uma camada 		 #
-# para outra, emulando como nossos neuronios sao ativados.				 #	
-#																		 #
-# 4) Conexao total (fully connected)									 #	
-#																		 #
-# As camadas que ficam por ultimo na rede estao 						 #
-# totalmente conectadas, o que significa que os neurônios 				 #
-# das camadas precedentes estao conectados com os subsequentes.			 #	
-#																		 #
+#                                                                        #    
+# 2) Subamostragem                                                       #     
+#                                                                        #
+# Os inputs da camada convolucional podem ter sensibilidade              # 
+# de seus filtros reduzida frente ao ruido, e esse processo              #    
+# chamamos de subamostragem.                                             #
+#                                                                        #
+# 3) Ativacao                                                            #
+#                                                                        #    
+# A camada de ativacao controla como o sinal flui de uma camada          #
+# para outra, emulando como nossos neuronios sao ativados.               #    
+#                                                                        #
+# 4) Conexao total (fully connected)                                     #    
+#                                                                        #
+# As camadas que ficam por ultimo na rede estao                          #
+# totalmente conectadas, o que significa que os neurônios                #
+# das camadas precedentes estao conectados com os subsequentes.          #    
+#                                                                        #
 ##########################################################################
 from keras.layers.convolutional import Conv2D
 
@@ -106,34 +107,34 @@ y_test = np_utils.to_categorical(y_test)
 num_classes = y_test.shape[1]
 
 def cnn_model():
-	model = Sequential()
+    model = Sequential()
 
-	# A Convolution2D sera a nossa camada de entrada. Podemos observar que ela possui 
-	# 32 mapas de features com tamanho de 5 × 5 e 'relu' como funcao de ativacao. 
-	model.add(Conv2D(32, (5, 5), input_shape=(1, 28, 28), activation='relu'))
+    # A Convolution2D sera a nossa camada de entrada. Podemos observar que ela possui 
+    # 32 mapas de features com tamanho de 5 × 5 e 'relu' como funcao de ativacao. 
+    model.add(Conv2D(32, (5, 5), input_shape=(1, 28, 28), activation='relu'))
 
     # A camada MaxPooling2D sera nossa segunda camada onde teremos um amostragem de 
-	# dimensoes 2 × 2.
-	model.add(MaxPooling2D(pool_size=(2, 2)))
+    # dimensoes 2 × 2.
+    model.add(MaxPooling2D(pool_size=(2, 2)))
 
-	# Na nossa camada de regularizacao usamos o metodo de Dropout
-	# excluindo 30% dos neuronios na camada, diminuindo nossa chance de overfitting.
-	model.add(Dropout(0.3))
+    # Na nossa camada de regularizacao usamos o metodo de Dropout
+    # excluindo 30% dos neuronios na camada, diminuindo nossa chance de overfitting.
+    model.add(Dropout(0.3))
 
     # Usamos a camada de Flatten para converter nossa matriz 2D
-	# numa representacao a ser processada pela fully connected.
-	model.add(Flatten())
+    # numa representacao a ser processada pela fully connected.
+    model.add(Flatten())
 
     # Camada fully connected com 128 neuronios e funcao de ativacao 'relu'.
-	model.add(Dense(128, activation='relu'))
+    model.add(Dense(128, activation='relu'))
     
-	# Nossa camada de saida possui o numero de neuronios compativel com o 
-	# numero de classes a serem classificadas, com uma funcao de ativacao
-	# do tipo 'softmax'.
-	model.add(Dense(num_classes, activation='softmax', name='preds'))
+    # Nossa camada de saida possui o numero de neuronios compativel com o 
+    # numero de classes a serem classificadas, com uma funcao de ativacao
+    # do tipo 'softmax'.
+    model.add(Dense(num_classes, activation='softmax', name='preds'))
 
-	model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-	return model
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    return model
 
 model = cnn_model()
 
@@ -143,35 +144,9 @@ model = cnn_model()
 model.summary()
 
 # Processo de treinamento do modelo. 
-model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10, batch_size=200, verbose=2)
+model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=5, batch_size=200, verbose=2)
 
 # Avaliacao da performance do nosso primeiro modelo.
 scores = model.evaluate(X_test, y_test, verbose=0)
+keras_mnist_vis.keras_digits_vis(model, X_test, y_test)
 print("Erro de: %.2f%%" % (100-scores[1]*100))
-
-# Metodo de visualizacao que mostra a varaicao da classificacao
-# dos digitos a partir de diferentes modificadores
-def keras_digits_vis(model, X_test, y_test):
-    
-    layer_idx = utils.find_layer_idx(model, 'preds')
-    model.layers[layer_idx].activation = activations.linear
-    model = utils.apply_modifications(model)
-
-    for class_idx in np.arange(10):    
-        indices = np.where(y_test[:, class_idx] == 1.)[0]
-        idx = indices[0]
-
-        f, ax = plt.subplots(1, 4)
-        ax[0].imshow(X_test[idx][..., 0])
-        
-        for i, modifier in enumerate([None, 'guided', 'relu']):
-            heatmap = visualize_saliency(model, layer_idx, filter_indices=class_idx, 
-                                        seed_input=X_test[idx], backprop_modifier=modifier)
-            if modifier is None:
-                modifier = 'vanilla'
-            ax[i+1].set_title(modifier)    
-            ax[i+1].imshow(heatmap)
-    plt.imshow(heatmap)
-
-keras_digits_vis(model, X_test, y_test)	
-

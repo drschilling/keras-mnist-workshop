@@ -89,11 +89,11 @@ num_classes = y_test.shape[1]
 # acuracia como metrica.
 
 def base_model():
-	model = Sequential()
-	model.add(Dense(num_pixels, input_dim=num_pixels, kernel_initializer='normal', activation='relu'))
-	model.add(Dense(num_classes, kernel_initializer='normal', activation='softmax', name='preds'))
-	model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
-	return model
+    model = Sequential()
+    model.add(Dense(num_pixels, input_dim=num_pixels, kernel_initializer='normal', activation='relu'))
+    model.add(Dense(num_classes, kernel_initializer='normal', activation='softmax', name='preds'))
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    return model
 
 
 model = base_model()
@@ -104,7 +104,7 @@ model = base_model()
 model.summary()
 
 # Processo de treinamento do modelo. 
-model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=1, batch_size=100, verbose=2)
+model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10, batch_size=200, verbose=2)
 
 # Avaliacao da performance do nosso primeiro modelo.
 scores = model.evaluate(X_test, y_test, verbose=0)
