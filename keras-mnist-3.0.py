@@ -63,8 +63,7 @@ num_classes = y_test.shape[1]
 
 # Modelo basico de tres camadas onde inicializamos um modelo sequencial
 # com suas funcoes de ativacao, e o compilamos usando um otimizador com 
-# uma taxa de aprendizagem inicial de 0.01 que sofre um decaimento.
-
+# uma taxa de aprendizagem inicial de 0.01 que sofre decaimento.
 second_layer = int(num_pixels/4) # pixels da segunda camada
 third_layer = int(num_pixels/16) # pixels da terceira camada
 

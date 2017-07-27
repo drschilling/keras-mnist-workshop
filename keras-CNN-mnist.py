@@ -114,11 +114,11 @@ def cnn_model():
     # dimensoes 2 × 2.
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
-    # Na nossa camada de regularizacao usamos o metodo de Dropout
+    # Durante a regularizacao usamos o metodo de Dropout
     # excluindo 30% dos neuronios na camada, diminuindo nossa chance de overfitting.
     model.add(Dropout(0.3))
 
-    # Usamos a camada de Flatten para converter nossa matriz 2D
+    # Usamos a Flatten para converter nossa matriz 2D
     # numa representacao a ser processada pela fully connected.
     model.add(Flatten())
 

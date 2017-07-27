@@ -77,10 +77,10 @@ def deeper_cnn_model():
     # Uma nova subamostragem com um pooling de dimensoes 2 x 2.
     model.add(MaxPooling2D(pool_size=(2, 2)))
     
-    # Uma camada de Dropout com probabilidade de 20%
+    # Dropout com probabilidade de 20%
     model.add(Dropout(0.2))
 
-    # Uma camada de Flatten preparando os dados para a camada fully connected. 
+    # Flatten preparando os dados para a camada fully connected. 
     model.add(Flatten())
 
     # Camada fully connected de 128 neuronios.

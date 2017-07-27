@@ -63,11 +63,9 @@ y_test = np_utils.to_categorical(y_test)
 # Numero de tipos de digitos encontrados no MNIST.
 num_classes = y_test.shape[1]
 
-# Modelo basico de quatro camadas onde inicializamos um modelo sequencial
+# Modelo basico de tres camadas onde inicializamos um modelo sequencial
 # com suas funcoes de ativacao, e o compilamos usando um otimizador com 
-# uma taxa de aprendizagem inicial de 0.01 que sofre um decaimento.
-# Uma camada de dropout tambem e parte integrande do modelo.
-
+# uma taxa de aprendizagem inicial de 0.01 que sofre decaimento.
 second_layer = int(num_pixels/4)
 third_layer = int(num_pixels/16)
 

@@ -85,7 +85,7 @@ y_test = np_utils.to_categorical(y_test)
 num_classes = y_test.shape[1]
 
 # Modelo basico de uma camada onde inicializamos um modelo sequencial
-# com suas funcoes de ativacao, e o compilamos usando um otimizador e
+# com suas funcoes de ativacao, e o compilamos usando gradiente descendente e
 # acuracia como metrica.
 
 def base_model():
